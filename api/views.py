@@ -16,6 +16,10 @@ class ProjectListCreateView(generics.ListCreateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
+class ProjectDetailView(generics.RetrieveAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
 @csrf_exempt # Solo para desarrollo, considera usar CSRF tokens en producción
 def contact_form_submit(request):
     if request.method == 'POST':
