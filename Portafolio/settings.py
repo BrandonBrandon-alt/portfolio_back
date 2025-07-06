@@ -2,6 +2,7 @@
 
 from pathlib import Path
 from decouple import config
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -77,6 +78,14 @@ DATABASES = {
         'PORT': config('DB_PORT'),
     }
 }
+
+# Use SQLite in-memory for tests
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:'
+    }
+
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
