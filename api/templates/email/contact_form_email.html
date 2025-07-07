@@ -1,13 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Contact Form Submission</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Mensaje de Contacto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Basic Reset */
+        body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+        table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+        img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+        body { height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; }
+
+        /* Custom Colors from your palette */
+        :root {
+            --color-background: #0b0c10;
+            --color-text-primary: #ffffff;
+            --color-text-muted: #4c5c68;
+            --color-accent-jedi-blue: #00f0ff;
+            --color-ui-border: #1f2937;
+            --color-ui-glow: #08f7fe;
+        }
+
+        /* Email Body Styles */
+        body {
+            background-color: #0b0c10;
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
 </head>
-<body>
-    <h2>New Contact Form Submission</h2>
-    <p><strong>Name:</strong> {{ name }}</p>
-    <p><strong>Email:</strong> {{ email }}</p>
-    <p><strong>Message:</strong></p>
-    <p>{{ message }}</p>
+<body style="background-color: #0b0c10; margin: 0 !important; padding: 0 !important;">
+
+    <!-- Main Container -->
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td align="center" style="padding: 20px 0;">
+                <!-- Content Wrapper -->
+                <table border="0" cellpadding="0" cellspacing="0" width="600" style="max-width: 600px; border-radius: 12px; border: 1px solid #1f2937; box-shadow: 0 0 25px rgba(8, 247, 254, 0.2), 0 0 10px rgba(8, 247, 254, 0.1); background-color: #0c0d12;">
+
+                    <!-- Header Section -->
+                    <tr>
+                        <td align="center" style="padding: 40px 20px; border-bottom: 1px solid #1f2937;">
+                            <h1 style="font-family: 'Orbitron', sans-serif; color: #ffffff; font-size: 28px; margin: 0; letter-spacing: 2px; text-shadow: 0 0 8px rgba(0, 240, 255, 0.7);">
+                                TRANSMISIÓN ENTRANTE
+                            </h1>
+                            <p style="color: #00f0ff; font-size: 16px; margin-top: 10px; font-family: 'Roboto', sans-serif;">
+                                Nuevo Mensaje Recibido
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Body Section -->
+                    <tr>
+                        <td align="left" style="padding: 40px 30px;">
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                <!-- Name -->
+                                <tr>
+                                    <td style="padding-bottom: 25px;">
+                                        <p style="color: #4c5c68; font-size: 14px; margin: 0; text-transform: uppercase; letter-spacing: 1px;">Nombre de Usuario:</p>
+                                        <p style="color: #ffffff; font-size: 18px; margin: 5px 0 0 0; font-weight: 500;">{{ name }}</p>
+                                    </td>
+                                </tr>
+                                <!-- Email -->
+                                <tr>
+                                    <td style="padding-bottom: 25px;">
+                                        <p style="color: #4c5c68; font-size: 14px; margin: 0; text-transform: uppercase; letter-spacing: 1px;">Dirección de Correo:</p>
+                                        <p style="color: #ffffff; font-size: 18px; margin: 5px 0 0 0; font-weight: 500;">
+                                            <a href="mailto:{{ email }}" style="color: #00f0ff; text-decoration: none;">{{ email }}</a>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <!-- Message -->
+                                <tr>
+                                    <td>
+                                        <p style="color: #4c5c68; font-size: 14px; margin: 0; text-transform: uppercase; letter-spacing: 1px;">Mensaje:</p>
+                                        <div style="background-color: #1f2937; border-radius: 8px; padding: 20px; margin-top: 10px;">
+                                            <p style="color: #ffffff; font-size: 16px; line-height: 1.6; margin: 0;">
+                                                {{ message }}
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Footer Section -->
+                    <tr>
+                        <td align="center" style="padding: 30px 20px; border-top: 1px solid #1f2937;">
+                            <p style="color: #4c5c68; font-size: 12px; margin: 0;">
+                                Este es un mensaje automatizado. No respondas a este correo.
+                            </p>
+                            <p style="color: #4c5c68; font-size: 12px; margin: 5px 0 0 0;">
+                                &copy; 2024 Tu App. Todos los derechos reservados.
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+                <!-- /Content Wrapper -->
+            </td>
+        </tr>
+    </table>
+    <!-- /Main Container -->
+
 </body>
 </html>
