@@ -3,6 +3,8 @@
 from pathlib import Path
 from decouple import config
 import sys
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -11,13 +13,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ▼ CORRECCIÓN 1: Mueve estas líneas aquí arriba y borra las del final ▼
 # ===================================================================
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # Ya no necesitas las líneas originales que tenían la clave quemada
 # SECRET_KEY = 'django-insecure-...'
 # DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', os.environ.get('RENDER_EXTERNAL_HOSTNAME')]
 
 # Application definition
 INSTALLED_APPS = [
@@ -69,14 +71,10 @@ WSGI_APPLICATION = 'Portafolio.wsgi.application' # Asegúrate que sea 'backend.w
 
 # Database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT'),
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600
+    )
 }
 
 # Use SQLite in-memory for tests
@@ -101,6 +99,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
