@@ -9,16 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 # CORRECCIONES AQUÍ:
-from .models import Project
-from .serializers import ProjectSerializer
 
-class ProjectListCreateView(generics.ListCreateAPIView):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
-
-class ProjectDetailView(generics.RetrieveAPIView):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
 
 @csrf_exempt # Solo para desarrollo, considera usar CSRF tokens en producción
 def contact_form_submit(request):
