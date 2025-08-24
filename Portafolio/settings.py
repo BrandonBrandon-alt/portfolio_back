@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'api.middleware.SecurityMiddleware',  # <-- Agregar nuestro middleware de seguridad
 ]
 
 ROOT_URLCONF = 'Portafolio.urls' # Asegúrate que el nombre sea 'backend.urls' si así llamaste al proyecto
@@ -125,3 +126,47 @@ SERVER_EMAIL = config('SERVER_EMAIL')
 
 # Opcional: Para depuración, puedes usar el backend de consola
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# ===================================================================
+# ▼ CONFIGURACIÓN DE RATE LIMITING PARA FORMULARIO DE CONTACTO  ▼
+# ===================================================================
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/hour',  # 100 requests por hora para usuarios anónimos
+        'user': '200/hour',  # 200 requests por hora para usuarios autenticados
+        'contact_form': '5/hour',  # Solo 5 envíos de formulario por hora por IP
+    }
+}
+
+# Configuración adicional de seguridad para formularios
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+
+# Logging para monitorear intentos de spam
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'contact_form.log'),
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'api.views': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
