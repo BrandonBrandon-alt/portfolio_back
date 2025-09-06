@@ -4,7 +4,6 @@ from pathlib import Path
 from decouple import config
 import sys
 import os
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -70,15 +69,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Portafolio.wsgi.application' # Asegúrate que sea 'backend.wsgi.application'
 
-# Database
+# Base de Datos (únicamente SQLite, no se usará PostgreSQL)
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3'
+    }
 }
 
-# Use SQLite in-memory for tests
+# Para tests usar SQLite en memoria (más rápido y aislado)
 if 'test' in sys.argv:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.sqlite3',
